@@ -224,9 +224,14 @@ control 'sysctl-18' do
   title 'Disable IPv6 if it is not needed'
   desc 'Disable IPv6 if it is not needed'
   only_if { !container_execution }
-  describe kernel_parameter('net.ipv6.conf.all.disable_ipv6') do
-    its(:value) { should eq 1 }
-  end
+  describe.one do
+    describe kernel_parameter('net.ipv6.conf.all.disable_ipv6') do
+      its(:value) { should eq 1 }
+    end
+    describe kernel_parameter('net.ipv6.conf.all.disable_ipv6') do
+      its(:value) { should eq nil }
+    end
+  end  
 end
 
 control 'sysctl-19' do
@@ -234,9 +239,14 @@ control 'sysctl-19' do
   title 'IPv6 Forwarding'
   desc "If you're not intending for your system to forward traffic between interfaces, or if you only have a single interface, the forwarding function must be disable."
   only_if { !container_execution }
-  describe kernel_parameter('net.ipv6.conf.all.forwarding') do
-    its(:value) { should eq 0 }
-  end
+  describe.one do
+    describe kernel_parameter('net.ipv6.conf.all.forwarding') do
+      its(:value) { should eq 0 }
+    end
+    describe kernel_parameter('net.ipv6.conf.all.forwarding') do
+      its(:value) { should eq nil }
+    end
+  end  
 end
 
 control 'sysctl-20' do
@@ -244,12 +254,22 @@ control 'sysctl-20' do
   title 'Disable acceptance of all IPv6 redirected packets'
   desc 'Disable acceptance of all redirected packets these prevents Man-in-the-Middle attacks.'
   only_if { !container_execution }
-  describe kernel_parameter('net.ipv6.conf.default.accept_redirects') do
-    its(:value) { should eq 0 }
+  describe.one do
+    describe kernel_parameter('net.ipv6.conf.default.accept_redirects') do
+      its(:value) { should eq 0}
+    end
+    describe kernel_parameter('net.ipv6.conf.default.accept_redirects') do
+      its(:value) { should eq nil }
+    end
   end
-  describe kernel_parameter('net.ipv6.conf.all.accept_redirects') do
-    its(:value) { should eq 0 }
-  end
+  describe.one do  
+    describe kernel_parameter('net.ipv6.conf.all.accept_redirects') do
+      its(:value) { should eq 0 }
+    end
+    describe kernel_parameter('net.ipv6.conf.all.accept_redirects') do
+      its(:value) { should eq nil }
+    end
+  end  
 end
 
 control 'sysctl-21' do
@@ -257,9 +277,14 @@ control 'sysctl-21' do
   title 'Disable acceptance of IPv6 router solicitations messages'
   desc 'The router solicitations setting determines how many router solicitations are sent when bringing up the interface. If addresses are statically assigned, there is no need to send any solicitations.'
   only_if { !container_execution }
-  describe kernel_parameter('net.ipv6.conf.default.router_solicitations') do
-    its(:value) { should eq 0 }
-  end
+  describe.one do
+    describe kernel_parameter('net.ipv6.conf.default.router_solicitations') do
+      its(:value) { should eq 0 }
+    end
+    describe kernel_parameter('net.ipv6.conf.default.router_solicitations') do
+      its(:value) { should eq nil }
+    end
+  end  
 end
 
 control 'sysctl-22' do
@@ -267,9 +292,14 @@ control 'sysctl-22' do
   title 'Disable Accept Router Preference from router advertisement'
   desc 'Disable Accept Router Preference from router advertisement'
   only_if { !container_execution }
-  describe kernel_parameter('net.ipv6.conf.default.accept_ra_rtr_pref') do
-    its(:value) { should eq 0 }
-  end
+  describe.one do
+    describe kernel_parameter('net.ipv6.conf.default.accept_ra_rtr_pref') do
+      its(:value) { should eq 0 }
+    end
+    describe kernel_parameter('net.ipv6.conf.default.accept_ra_rtr_pref') do
+      its(:value) { should eq nil }
+    end
+  end  
 end
 
 control 'sysctl-23' do
@@ -277,9 +307,14 @@ control 'sysctl-23' do
   title 'Disable learning Prefix Information from router advertisement'
   desc 'The accept_ra_pinfo setting controls whether the system will accept prefix info from the router.'
   only_if { !container_execution }
-  describe kernel_parameter('net.ipv6.conf.default.accept_ra_pinfo') do
-    its(:value) { should eq 0 }
-  end
+  describe.one do
+    describe kernel_parameter('net.ipv6.conf.default.accept_ra_pinfo') do
+      its(:value) { should eq 0 }
+    end
+    describe kernel_parameter('net.ipv6.conf.default.accept_ra_pinfo') do
+      its(:value) { should eq nil }
+    end
+  end  
 end
 
 control 'sysctl-24' do
@@ -287,9 +322,14 @@ control 'sysctl-24' do
   title 'Disable learning Hop limit from router advertisement'
   desc 'The accept_ra_defrtr setting controls whether the system will accept Hop Limit settings from a router advertisement. Setting it to 0 prevents a router from changing your default IPv6 Hop Limit for outgoing packets.'
   only_if { !container_execution }
-  describe kernel_parameter('net.ipv6.conf.default.accept_ra_defrtr') do
-    its(:value) { should eq 0 }
-  end
+  describe.one do
+    describe kernel_parameter('net.ipv6.conf.default.accept_ra_defrtr') do
+      its(:value) { should eq 0 }
+    end
+    describe kernel_parameter('net.ipv6.conf.default.accept_ra_defrtr') do
+      its(:value) { should eq nil }
+    end
+  end  
 end
 
 control 'sysctl-25' do
@@ -297,12 +337,22 @@ control 'sysctl-25' do
   title 'Disable the system`s acceptance of router advertisement'
   desc 'Setting controls whether the system will accept router advertisement'
   only_if { !container_execution }
-  describe kernel_parameter('net.ipv6.conf.all.accept_ra') do
-    its(:value) { should eq 0 }
-  end
-  describe kernel_parameter('net.ipv6.conf.default.accept_ra') do
-    its(:value) { should eq 0 }
-  end
+  describe.one do
+    describe kernel_parameter('net.ipv6.conf.all.accept_ra') do
+      its(:value) { should eq 0 }
+    end
+    describe kernel_parameter('net.ipv6.conf.all.accept_ra') do
+      its(:value) { should eq nil }
+    end
+  end  
+  describe.one do
+    describe kernel_parameter('net.ipv6.conf.default.accept_ra') do
+      its(:value) { should eq 0 }
+    end
+    describe kernel_parameter('net.ipv6.conf.default.accept_ra') do
+      its(:value) { should eq nil }
+    end
+  end  
 end
 
 control 'sysctl-26' do
@@ -310,9 +360,14 @@ control 'sysctl-26' do
   title 'Disable IPv6 autoconfiguration'
   desc 'The autoconf setting controls whether router advertisements can cause the system to assign a global unicast address to an interface.'
   only_if { !container_execution }
-  describe kernel_parameter('net.ipv6.conf.default.autoconf') do
-    its(:value) { should eq 0 }
-  end
+  describe.one do
+    describe kernel_parameter('net.ipv6.conf.default.autoconf') do
+      its(:value) { should eq 0 }
+    end
+    describe kernel_parameter('net.ipv6.conf.default.autoconf') do
+      its(:value) { should eq nil }
+    end
+  end  
 end
 
 control 'sysctl-27' do
@@ -320,9 +375,14 @@ control 'sysctl-27' do
   title 'Disable neighbor solicitations to send out per address'
   desc 'The dad_transmits setting determines how many neighbor solicitations to send out per address (global and link-local) when bringing up an interface to ensure the desired address is unique on the network.'
   only_if { !container_execution }
-  describe kernel_parameter('net.ipv6.conf.default.dad_transmits') do
-    its(:value) { should eq 0 }
-  end
+  describe.one do
+    describe kernel_parameter('net.ipv6.conf.default.dad_transmits') do
+      its(:value) { should eq 0 }
+    end
+    describe kernel_parameter('net.ipv6.conf.default.dad_transmits') do
+      its(:value) { should eq nil }
+    end
+  end  
 end
 
 control 'sysctl-28' do
@@ -330,9 +390,14 @@ control 'sysctl-28' do
   title 'Assign one global unicast IPv6 addresses to each interface'
   desc 'The max_addresses setting determines how many global unicast IPv6 addresses can be assigned to each interface. The default is 16, but it should be set to exactly the number of statically configured global addresses required.'
   only_if { !container_execution }
-  describe kernel_parameter('net.ipv6.conf.default.max_addresses') do
-    its(:value) { should eq 1 }
-  end
+  describe.one do
+    describe kernel_parameter('net.ipv6.conf.default.max_addresses') do
+      its(:value) { should eq 1 }
+    end
+    describe kernel_parameter('net.ipv6.conf.default.max_addresses') do
+      its(:value) { should eq nil }
+    end
+  end  
 end
 
 control 'sysctl-29' do
